@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebThoiTrang", "WebThoiTrang\WebThoiTrang.csproj", "{59306548-03A8-45D4-BA30-5DFD0992C2DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebThoiTrang", "WebThoiTrang\WebThoiTrang.csproj", "{59306548-03A8-45D4-BA30-5DFD0992C2DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebThoiTrang.Models", "WebThoiTrang.Models\WebThoiTrang.Models.csproj", "{34E4C593-5D28-4A99-B15F-0E9F2491E717}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebThoiTrang.DataAccess", "WebThoiTrang.DataAccess\WebThoiTrang.DataAccess.csproj", "{A95058E3-411D-4EE7-A3F2-F92F079E4845}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebThoiTrang.Utility", "WebThoiTrang.Utility\WebThoiTrang.Utility.csproj", "{156C6A81-A639-4E9D-B08B-AC88CCB38BFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{59306548-03A8-45D4-BA30-5DFD0992C2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59306548-03A8-45D4-BA30-5DFD0992C2DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59306548-03A8-45D4-BA30-5DFD0992C2DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E4C593-5D28-4A99-B15F-0E9F2491E717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E4C593-5D28-4A99-B15F-0E9F2491E717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E4C593-5D28-4A99-B15F-0E9F2491E717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E4C593-5D28-4A99-B15F-0E9F2491E717}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95058E3-411D-4EE7-A3F2-F92F079E4845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95058E3-411D-4EE7-A3F2-F92F079E4845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95058E3-411D-4EE7-A3F2-F92F079E4845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95058E3-411D-4EE7-A3F2-F92F079E4845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{156C6A81-A639-4E9D-B08B-AC88CCB38BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{156C6A81-A639-4E9D-B08B-AC88CCB38BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{156C6A81-A639-4E9D-B08B-AC88CCB38BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{156C6A81-A639-4E9D-B08B-AC88CCB38BFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
