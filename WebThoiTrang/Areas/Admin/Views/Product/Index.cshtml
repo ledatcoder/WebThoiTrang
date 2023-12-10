@@ -1,0 +1,41 @@
+﻿@model List<Product>
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row pt-3 ">
+        <div class="col-12 p-2">
+            <a asp-controller="Product" asp-action="Upsert"  class="btn btn-outline-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+                </svg>&nbsp Tạo Sản Phẫm Mới
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table id="tblData" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-2 col-md-3">
+                            Tên Sản Phẫm
+                        </th>                    
+                        <th class="col-2 col-md-3">
+                            Giá Bán
+                        </th>
+                        <th class="col-2 col-md-3">
+                            Danh Mục
+                        </th>
+                        <th class="col-2 col-md-3"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>       
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}

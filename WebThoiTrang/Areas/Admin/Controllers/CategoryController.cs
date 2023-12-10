@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using WebThoiTrang.DataAccess.Repository.IRepository;
 using WebThoiTrang.Models;
 
@@ -16,7 +17,7 @@ namespace WebThoiTrang.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Category> categories = _unitOfWork.Category.GetAll().ToList();
+            List<Category> categories = _unitOfWork.Category.GetAll().OrderBy(u => u.Id).ToList();
             return View(categories);
         }
         public IActionResult Create()
@@ -69,31 +70,30 @@ namespace WebThoiTrang.Areas.Admin.Controllers
             }
             return View();
         }
-        public IActionResult Delete(int? id)
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Category categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
-            if (categoryFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(categoryFromDb);
+            List<Category> categories = _unitOfWork.Category.GetAll().OrderBy(u => u.Id).ToList();
+            return Json(new { data = categories });
         }
-        [HttpPost,ActionName("Delete")]
-        public IActionResult DeletePost(int? id)
+
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
         {
             Category obj = _unitOfWork.Category.Get(u => u.Id == id);
             if (obj == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Lổi Trong Khi Xóa!" });
             }
             _unitOfWork.Category.Remove(obj);
             _unitOfWork.Save();
-            TempData["success"] = "Xóa Danh Mục Thành Công";
-            return RedirectToAction("Index");
+
+            return Json(new { success = true, message = "Xóa Thành Công" });
         }
+        #endregion
     }
 }
