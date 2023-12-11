@@ -1,8 +1,41 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+﻿@model IPagedList<Product>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Web.Common
+<div class="container">
+    <div class="text-center ">
+        <button class="btn btn-outline-secondary filter-button buttons" data-filter="all">Tất Cà</button>
+        @foreach (var obj in Model)
+        {
+            <button class="btn btn-outline-secondary filter-button buttons" data-filter="@obj.Category.Name.Replace(' ', '_')">@obj.Category.Name</button>
+            
+        }
+    </div>
+    <br />
+    <div class="row">
+            <partial name="_IndividualProductCard"  />
+    </div>
+       @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.MinimalWithPageCountText)
+   
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $(".filter-button").click(function () {
+
+                var value = $(this).attr('data-filter');
+                if (value == "all") {
+                    $('.filter').show('1000');
+                }
+                else {
+                    $(".filter").not('.' + value).hide('3000');
+                    $('.filter').filter('.' + value).show('3000');
+
+                }
+            });
+
+        });
+    </script>
+}
