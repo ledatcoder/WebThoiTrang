@@ -11,6 +11,7 @@ namespace WebThoiTrang.DataAccess.Repository.IRepository
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
         IProductImageRepository ProductImage { get; }
+        ICompanyRepository Company { get; }
         void Save();
     }
 }
