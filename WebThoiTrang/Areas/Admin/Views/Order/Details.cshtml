@@ -33,7 +33,7 @@
                             <div class="row my-1">
                                 <div class="col-3">Họ Tên Người Nhận</div>
                                 <div class="col-9">
-                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Customer))
                                     {
                                         <input asp-for="OrderHeader.Name" type="text" class="form-control" />
                                         <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
@@ -48,7 +48,7 @@
                             <div class="row my-1">
                                 <div class="col-3">Số Điện Thoại</div>
                                 <div class="col-9">
-                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Customer))
                                     {
                                         <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" />
                                         <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
@@ -62,7 +62,7 @@
                             <div class="row my-1">
                                 <div class="col-3">Địa Chỉ Nhận Hàng</div>
                                 <div class="col-9">
-                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Customer))
                                     {
                                         <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control" />
                                         <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
