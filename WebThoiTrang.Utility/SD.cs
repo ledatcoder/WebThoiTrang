@@ -21,10 +21,10 @@ namespace WebThoiTrang.Utility
         public const string StatusCancelled = "Hủy Đơn Hàng";
         public const string StatusRefunded = "Hoàn Tiền";
 
-        public const string PaymentStatusPending = "Pending";
-        public const string PaymentStatusApproved = "Approved";
-        public const string PaymentStatusDelayedPayment = "ApprovedForDelayedPayment";
-        public const string PaymentStatusRejected = "Rejected";
+        public const string PaymentStatusPending = "Chưa Được Giải Quyết";
+        public const string PaymentStatusApproved = "Thanh Toán Thành Công";
+        public const string PaymentStatusDelayedPayment = "Đả Được Phê Duyệt Thanh Toán Sau";
+        public const string PaymentStatusRejected = "Thanh Toán Không Thành CÔng";
 
 
         public const string SessionCart = "SessionShoppingCart";

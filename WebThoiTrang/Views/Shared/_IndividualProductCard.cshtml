@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Product>
+@using System.Globalization
+@{
+    var culture = new CultureInfo("en-US");
 
+}
 
 @foreach (var product in Model)
 {
@@ -23,7 +27,7 @@
                     <p class="text-dark text-opacity-75 text-center mb-0">
                         Giá:
                         <span class="text-decoration-line-through">
-                            @product.ListPrice.ToString()VNĐ
+                            @product.ListPrice.ToString("#,##0.##", culture) VNĐ
                         </span>
                     </p>
                 </div>
@@ -31,7 +35,7 @@
                     <p class="text-dark text-opacity-75 text-center ">
                         Giá Ưu Đải:
                         <span>
-                            @product.Price6.ToString()VNĐ
+                            @product.Price6.ToString("#,##0.##", culture) VNĐ
                         </span>
                     </p>
                 </div>

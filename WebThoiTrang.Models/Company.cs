@@ -11,11 +11,17 @@ namespace WebThoiTrang.Models
     {
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Tên Công Ty")]
         public string Name { get; set; }
+        [Display(Name = "Địa Chỉ")]
         public string StreetAddress { get; set; }
+        [Display(Name = "Tên Thành Phố")]
         public string City { get; set; }
+        [Display(Name = "Tên Quốc Gia")]
         public string State { get; set; }
+        [Display(Name = "Mã Bưu Điện")]
         public string PostalCode { get; set; }
+        [Display(Name = "Số Điện Thoại")]
         public string PhoneNumber { get; set; }
     }
 }

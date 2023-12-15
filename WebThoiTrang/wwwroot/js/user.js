@@ -23,10 +23,10 @@ function loadDataTable() {
                         return `
                         <div class="text-center">
                              <a onclick=LockUnlock('${data.id}') class="btn btn-danger text-white" style="cursor:pointer; width:100px;">
-                                    <i class="bi bi-lock-fill"></i> Khóa
+                                    <i class="bi bi-lock-fill"></i> Khóa TK
                                 </a> 
                                 <a href="/admin/user/RoleManagment?userId=${data.id}" class="btn btn-danger text-white" style="cursor:pointer; width:100px;">
-                                     <i class="bi bi-pencil-square"></i>Cho Phép
+                                     <i class="bi bi-pencil-square"></i>Phân Quyền
                                 </a>
                         </div>
                     `
@@ -35,10 +35,10 @@ function loadDataTable() {
                         return `
                         <div class="text-center">
                               <a onclick=LockUnlock('${data.id}') class="btn btn-success text-white" style="cursor:pointer; width:100px;">
-                                    <i class="bi bi-unlock-fill"></i> Mở Khóa
+                                    <i class="bi bi-unlock-fill"></i> Mở Khóa TK
                                 </a>
                                 <a href="/admin/user/RoleManagment?userId=${data.id}" class="btn btn-danger text-white" style="cursor:pointer; width:100px;">
-                                     <i class="bi bi-pencil-square"></i> Cho Phép
+                                     <i class="bi bi-pencil-square"></i> Phân Quyền
                                 </a>
                         </div>`
                     }

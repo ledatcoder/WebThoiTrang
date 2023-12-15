@@ -3,7 +3,7 @@
 @using X.PagedList;
 @using X.PagedList.Web.Common
 <div class="container">
-    <div class="text-center ">
+    <div class="text-center">
         <button class="btn btn-outline-secondary filter-button buttons" data-filter="all">Tất Cà</button>
         @foreach (var obj in Model)
         {
@@ -12,7 +12,7 @@
         }
     </div>
     <br />
-    <div class="row">
+    <div class="row ">
             <partial name="_IndividualProductCard"  />
     </div>
        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.MinimalWithPageCountText)

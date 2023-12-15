@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using WebThoiTrang.DataAccess.Repository.IRepository;
 using WebThoiTrang.Models;
+using WebThoiTrang.Utility;
 
 namespace WebThoiTrang.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
