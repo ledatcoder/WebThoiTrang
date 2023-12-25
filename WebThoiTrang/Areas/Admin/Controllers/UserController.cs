@@ -125,12 +125,12 @@ namespace WebThoiTrang.Areas.Admin.Controllers
             var objFromDb = _unitOfWork.ApplicationUser.Get(u => u.Id == id);
             if (objFromDb == null)
             {
-                return Json(new { success = false, message = "Error while Locking/Unlocking" });
+                return Json(new { success = false, message = "Lổi Trong Khi Khóa/Mở Khóa Tài Khoản" });
             }
 
             if (objFromDb.LockoutEnd != null && objFromDb.LockoutEnd > DateTime.Now)
             {
-                //user is currently locked and we need to unlock them
+                // mở khóa người dùng
                 objFromDb.LockoutEnd = DateTime.Now;
             }
             else
@@ -139,7 +139,7 @@ namespace WebThoiTrang.Areas.Admin.Controllers
             }
             _unitOfWork.ApplicationUser.Update(objFromDb);
             _unitOfWork.Save();
-            return Json(new { success = true, message = "Operation Successful" });
+            return Json(new { success = true, message = "Thao Tác Thành Công" });
         }
 
         #endregion

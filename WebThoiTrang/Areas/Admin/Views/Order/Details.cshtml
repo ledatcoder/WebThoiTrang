@@ -160,7 +160,7 @@
                                 </div>
                             </div>
 
-                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                        @*     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                             {
                                 <div class="row my-1">
                                     <div class="col-3">Session ID</div>
@@ -178,7 +178,7 @@
 
                                     </div>
                                 </div>
-                            }
+                            } *@
                             <div class="row my-1">
 
                                 @if (Model.OrderHeader.SessionId == null)
@@ -204,6 +204,7 @@
                                     <input asp-for="OrderHeader.PaymentStatus" readonly type="text" class="form-control" />
                                 </div>
                             </div>
+
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                             {
                                 <button type="submit" asp-action="UpdateOrderDetail" class="btn btn-warning form-control my-1">Cập Nhật Chi Tiết Đơn Hàng</button>
@@ -247,10 +248,11 @@
                             </ul>
 
                             @if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
-                            Model.OrderHeader.OrderStatus == SD.StatusShipped)
+                            Model.OrderHeader.OrderStatus == SD.StatusShipped && User.IsInRole(SD.Role_Company))
                             {
                                 <button type="submit" class="btn btn-success form-control my-1">Thanh Toán Ngay</button>
                             }
+                        
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                             {
                                 @if (Model.OrderHeader.OrderStatus == SD.StatusApproved)
@@ -267,16 +269,24 @@
 
                                 @if (Model.OrderHeader.OrderStatus != SD.StatusRefunded &&
                                Model.OrderHeader.OrderStatus != SD.StatusCancelled &&
-                               Model.OrderHeader.OrderStatus != SD.StatusShipped)
+                               Model.OrderHeader.OrderStatus != SD.StatusShipped && Model.OrderHeader.OrderStatus != SD.StatusPaymentStatusApproved)
                                 {
                                     <button asp-action="CancelOrder" type="submit" class="btn btn-danger form-control my-1">Hủy Dơn Hàng</button>
+                                }
+                                @if ((Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
+                               Model.OrderHeader.OrderStatus == SD.StatusShipped))
+                                {
+                                    <button type="submit" asp-action="StatusPaymentStatusApproved"
+                                            class="btn btn-primary form-control my-1">
+                                        Đả Thanh Toán Khi Nhận Hàng
+                                    </button>
                                 }
                             }
                             @if (User.IsInRole(SD.Role_Customer) || User.IsInRole(SD.Role_Company))
                             {
                                 @if (Model.OrderHeader.OrderStatus != SD.StatusRefunded &&
                                Model.OrderHeader.OrderStatus != SD.StatusCancelled &&
-                               Model.OrderHeader.OrderStatus != SD.StatusShipped)
+                               Model.OrderHeader.OrderStatus != SD.StatusShipped && Model.OrderHeader.OrderStatus != SD.StatusPaymentStatusApproved)
                                 {
                                     <button asp-action="CancelOrder" type="submit" class="btn btn-danger form-control my-1">Hủy Đơn Hàng</button>
                                 }
@@ -299,15 +309,15 @@
             if (document.getElementById("trackingNumber").value == "") {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: 'Vui Lòng Nhập Mã Theo Giõi DƠn Hàng!',
+                    title: 'Lổi...',
+                    text: 'Vui Lòng Nhập Mã Theo Giõi Đơn Hàng!',
                 });
                 return false;
             }
             if (document.getElementById("carrier").value == "") {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
+                    title: 'Lổi...',
                     text: 'Vui Lòng Nhập Tên Dơn Vị Vận Chuyễn',
                 });
                 return false;

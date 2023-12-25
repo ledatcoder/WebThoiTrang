@@ -122,11 +122,17 @@
 						</p>
 					</div>
 					<div class="col-12 col-md-4">
-						<button type="submit" value="Place Order" class="btn btn-primary form-control">Thanh Toán Trực Tiếp </button>
-						<a asp-action="COD" class="btn btn-primary border-0 bg-gradient w-100 ">Thanh Toán Khi Nhận Hàng</a>
+						<button type="submit" value="COD" class="btn btn-primary form-control">Đặt Hàng</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </form>
+
+@section Scripts {
+	
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}
