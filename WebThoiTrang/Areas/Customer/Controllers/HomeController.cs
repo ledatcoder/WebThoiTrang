@@ -26,7 +26,7 @@ namespace WebThoiTrang.Areas.Customer.Controllers
 
         public IActionResult Index(int page = 1)
         {
-            int pageSize = 6;
+            int pageSize = 9;
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages").OrderBy(u => u.Id).ToList();
             return View(productList.ToPagedList(page,pageSize));
         }
@@ -56,6 +56,7 @@ namespace WebThoiTrang.Areas.Customer.Controllers
                 //shopping cart exists
                 cartFromDb.Count += shoppingCart.Count;
                 cartFromDb.Size = shoppingCart.Size;
+                cartFromDb.Color = shoppingCart.Color;
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
                 _unitOfWork.Save();
             }

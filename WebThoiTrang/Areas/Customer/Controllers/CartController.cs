@@ -117,6 +117,8 @@ namespace WebThoiTrang.Areas.Customer.Controllers
                     Price = cart.Price,
                     Count = cart.Count,
                     Size = cart.Size,
+                    Color = cart.Color,
+                    
                 };
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();

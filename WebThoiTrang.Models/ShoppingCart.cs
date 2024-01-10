@@ -22,6 +22,8 @@ namespace WebThoiTrang.Models
         [MaxLength(3, ErrorMessage = "Phải Nhập Size")]
         public string Size { get; set; }
 
+        public string Color { get; set; }
+
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]

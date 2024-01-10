@@ -58,7 +58,7 @@
 									<span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
 								</div>
 							</div>
-							<div class="row my-1">
+				@* 			<div class="row my-1">
 								<div class="col-3">
 									<label>Thành Phố</label>
 								</div>
@@ -84,7 +84,7 @@
 									<input asp-for="OrderHeader.PostalCode" class="form-control" />
 									<span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
 								</div>
-							</div>
+							</div> *@
 						</div>
 						<div class="col-12 col-lg-5 offset-lg-1">
 							<h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -95,10 +95,11 @@
 								{
 									<li class="list-group-item d-flex justify-content-between">
 										<div>
-											<h6 class="my-0">@details.Product.Name</h6>											
-											<small class="text-muted text-center">Kích Cở: @details.Size</small>
+											<h6 class="my-0">@details.Product.Name</h6>																				
+											<small class="text-muted ">Số Lượng: @details.Count</small>
 										</div>
-										<small class="text-muted ">Số Lượng: @details.Count</small>
+										<small class="text-muted text-center">Màu Sắc: @details.Color</small>
+										<small class="text-muted text-center">Kích Cở: @details.Size</small>
 										<span class="text-muted">@((details.Price * details.Count).ToString("#,##0.##", culture)) VNĐ </span>
 									</li>
 									
