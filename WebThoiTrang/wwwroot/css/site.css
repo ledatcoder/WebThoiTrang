@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .divider-text:before,
 .divider-text:after {
   color: white;
@@ -556,76 +557,107 @@
     font-size: 1.2rem;
   }
 }
-.carddetail html {
-  box-sizing: border-box;
-  height: 100%;
+.carddetail {
+  /* I haven't found a way for IE and Edge to let me style inputs that way */
 }
-.carddetail *,
-.carddetail *::before,
-.carddetail *::after {
-  box-sizing: inherit;
+.carddetail html * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
-.carddetail .container {
+.carddetail body {
+  background-color: #262626;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
-.carddetail .thumbnails {
-  display: flex;
-  flex-direction: column;
-  line-height: 0;
-}
-.carddetail .thumbnails li {
-  flex: auto;
-}
-.carddetail .thumbnails a {
+.carddetail i {
+  position: relative;
   display: block;
-}
-.carddetail .thumbnails img {
-  width: 30vmin;
-  height: 20vmin;
-  object-fit: cover;
-  object-position: top;
-}
-.carddetail .slides {
+  width: auto;
+  height: 300px;
   overflow: hidden;
-  width: 75vmin;
-  height: 100vmin;
+  border-radius: 5px;
 }
-.carddetail .slides li {
-  width: 75vmin;
-  height: 100vmin;
+.carddetail i:before, .carddetail i:after {
+  content: "⥪";
   position: absolute;
+  top: 50%;
+  left: 1rem;
+  z-index: 2;
+  width: 2rem;
+  height: 2rem;
+  background: dodgerblue;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+.carddetail i:after {
+  content: "⥭";
+  left: auto;
+  right: 1rem;
+}
+.carddetail input {
+  appearance: none;
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transform: translateX(100%);
+  transition: transform ease-in-out 400ms;
   z-index: 1;
 }
-.carddetail .slides img {
-  height: 100vmin;
-  object-fit: cover;
-  object-position: top;
+.carddetail input:focus {
+  outline: none;
 }
-.carddetail .slides li:target {
-  z-index: 3;
-  -webkit-animation: slide 1s 1;
+.carddetail input:after {
+  content: attr(title);
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
 }
-.carddetail .slides li:not(:target) {
-  -webkit-animation: hidden 1s 1;
+.carddetail input:not(checked):before {
+  content: "";
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  top: 50%;
+  left: calc(-100% + 1rem);
 }
-@keyframes slide {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
+.carddetail input:checked:before {
+  display: none;
+  left: 1rem;
 }
-@keyframes hidden {
-  0% {
-    z-index: 2;
-  }
-  100% {
-    z-index: 2;
-  }
+.carddetail input:checked {
+  transform: translateX(0);
+  pointer-event: none;
+  z-index: 0;
+  box-shadow: -5px 10px 20px -15px rgb(0, 0, 0);
+}
+.carddetail input:checked + input:before {
+  left: -3rem;
+}
+.carddetail input:checked + input ~ input:before {
+  display: none;
 }
 
 .bg {

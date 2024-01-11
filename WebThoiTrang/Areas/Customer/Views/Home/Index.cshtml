@@ -2,24 +2,55 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList;
 @using X.PagedList.Web.Common
-<div class="container">
-    <div class="text-center">
-        <button class="btn btn-outline-secondary filter-button buttons" data-filter="all">Tất Cà</button>
-        @foreach (var obj in Model)
-        {
-            <button class="btn btn-outline-secondary filter-button buttons" data-filter="@obj.Category.Name.Replace(' ', '_')">@obj.Category.Name</button>
+
+<div class="container ">
+   <div class="carddetail">
+        <i>
+            <input checked type="radio" name="s" style="background-image: url('https://zofal.vn/wp-content/uploads/2022/04/toip5.jpg');" title="Best Seller">
+            <input type="radio" name="s" style="background-image: url('https://innhatnam68.com/wp-content/uploads/2019/06/in-voucher-giam-gia-thoi-trang.jpg');" title="Voucher Giảm Giá Lên Đến 75%">
+            <input type="radio" name="s" style="background-image: url('https://file.hstatic.net/1000304105/article/artboard_1_copy_7_3046cc000dde47c4ae20ecf8f6b9f193.png');" title="Sản Phẩm Nổi Trội">
+            <input type="radio" name="s" style="background-image: url('https://fado.vn/blog/wp-content/uploads/2019/10/ao-polo-ralph-lauren-gia-bao-nhieu-1.jpg');" title="Thương Hiệu Nổi Tiếng">
             
-        }
-    </div>
+        </i>
+   </div>
+    <ul class="navbar-nav me-auto sub-menu">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-success " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" data-filter="all">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z" />
+                </svg>
+                Bộ Lọc
+            </a>
+            <div class="dropdown-menu menu">
+                <button class="btn btn-outline-secondary filter-button buttons" data-filter="all">Tất Cà</button>
+                @foreach (var obj in Model)
+                {
+                    <button class="btn btn-outline-secondary filter-button buttons" data-filter="@obj.Category.Name.Replace(' ', '_')">@obj.Category.Name</button>
+
+                }
+            </div>
+        </li>
+    </ul>
+    @*     <div class="text-center">
+    <button class="btn btn-outline-secondary filter-button buttons" data-filter="all">Tất Cà</button>
+    @foreach (var obj in Model)
+    {
+    <button class="btn btn-outline-secondary filter-button buttons" data-filter="@obj.Category.Name.Replace(' ', '_')">@obj.Category.Name</button>
+
+    }
+    </div> *@
     <br />
     <div class="row ">
-            <partial name="_IndividualProductCard"  />
+        <partial name="_IndividualProductCard" />
     </div>
     <div class="d-flex justify-content-center " style="font-size:30px;">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
     </div>
-      
    
+    <div class="detailproduct">
+        
+
+    </div>
 </div>
 
 @section Scripts {
@@ -40,5 +71,9 @@
             });
 
         });
+
+
+       
+
     </script>
 }
