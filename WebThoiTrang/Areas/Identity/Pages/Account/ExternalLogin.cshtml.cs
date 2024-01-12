@@ -84,6 +84,7 @@ namespace WebThoiTrang.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");

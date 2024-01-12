@@ -44,5 +44,13 @@ namespace WebThoiTrang.Models
         public string PostalCode { get; set; }
         [Required]
         public string Name { get; set; }
+
+        [Display(Name = "Coupon Code")]
+        public string CouponCode { get; set; }
+        public double CouponCodeDiscount { get; set; }
+        [Required]
+        public double OrderTotalOriginal { get; set; }
+
     }
+
 }

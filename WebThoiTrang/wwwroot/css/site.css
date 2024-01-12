@@ -557,6 +557,37 @@
     font-size: 1.2rem;
   }
 }
+.detailproduct .banner {
+  width: 100%;
+  background: url(http://s6.favim.com/orig/150112/background-cold-gif-nature-Favim.com-2380226.gif);
+  /*https://i0.wp.com/media.giphy.com/media/5ERaOy5fQEIAU/giphy.gif*/
+  background-size: cover;
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  padding: 40px 15px;
+}
+.detailproduct .big-text {
+  font-size: 130px;
+  font-weight: 800;
+  animation-delay: 1s;
+}
+.detailproduct .banner a {
+  display: inline-block;
+  background: #fff;
+  color: #36465d;
+  text-transform: uppercase;
+  padding: 15px;
+  text-decoration: none;
+  font-size: 40px;
+  transition: 0.3s;
+}
+.detailproduct .banner a:hover {
+  background: #333;
+  color: #fff;
+  padding: 15px 20px;
+}
+
 .carddetail {
   /* I haven't found a way for IE and Edge to let me style inputs that way */
 }
@@ -732,5 +763,140 @@
   }
   100% {
     background-position: 100% 100%;
+  }
+}
+.coupons * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.coupons body {
+  background: #DDD;
+  font-family: "Inknut Antiqua", serif;
+  font-family: "Ravi Prakash", cursive;
+  font-family: "Lora", serif;
+  font-family: "Indie Flower", cursive;
+  font-family: "Cabin", sans-serif;
+}
+.coupons div.container {
+  max-width: 1350px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.coupons .upcomming {
+  font-size: 45px;
+  text-transform: uppercase;
+  border-left: 14px solid rgba(255, 235, 59, 0.78);
+  padding-left: 12px;
+  margin: 18px 8px;
+}
+.coupons .container .item {
+  width: 48%;
+  float: left;
+  padding: 0 20px;
+  background: #fff;
+  overflow: hidden;
+  margin: 10px;
+}
+.coupons .container .item-right, .coupons .container .item-left {
+  float: left;
+  padding: 20px;
+}
+.coupons .container .item-right {
+  padding: 79px 50px;
+  margin-right: 20px;
+  width: 25%;
+  position: relative;
+  height: 286px;
+}
+.coupons .container .item-right .up-border, .coupons .container .item-right .down-border {
+  padding: 14px 15px;
+  background-color: #ddd;
+  border-radius: 50%;
+  position: absolute;
+}
+.coupons .container .item-right .up-border {
+  top: -8px;
+  right: -35px;
+}
+.coupons .container .item-right .down-border {
+  bottom: -13px;
+  right: -35px;
+}
+.coupons .container .item-right .num {
+  font-size: 60px;
+  text-align: center;
+  color: #111;
+}
+.coupons .container .item-right .day, .coupons .container .item-left .event {
+  color: #555;
+  font-size: 20px;
+  margin-bottom: 9px;
+}
+.coupons .container .item-right .day {
+  text-align: center;
+  font-size: 25px;
+}
+.coupons .container .item-left {
+  width: 71%;
+  padding: 34px 0px 19px 46px;
+  border-left: 3px dotted #999;
+}
+.coupons .container .item-left .title {
+  color: #111;
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+.coupons .container .item-left .sce {
+  margin-top: 5px;
+  display: block;
+}
+.coupons .container .item-left .sce .icon, .coupons .container .item-left .sce p,
+.coupons .container .item-left .loc .icon, .coupons .container .item-left .loc p {
+  float: left;
+  word-spacing: 5px;
+  letter-spacing: 1px;
+  color: #888;
+  margin-bottom: 10px;
+}
+.coupons .container .item-left .sce .icon, .coupons .container .item-left .loc .icon {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #666;
+}
+.coupons .container .item-left .loc {
+  display: block;
+}
+.coupons .fix {
+  clear: both;
+}
+.coupons .container .item .tickets, .coupons .booked, .coupons .cancel {
+  color: #fff;
+  padding: 6px 14px;
+  float: right;
+  margin-top: 10px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+.coupons .container .item .tickets {
+  background: #777;
+}
+.coupons .container .item .booked {
+  background: #3D71E9;
+}
+.coupons .container .item .cancel {
+  background: #DF5454;
+}
+.coupons .linethrough {
+  text-decoration: line-through;
+}
+@media only screen and (max-width: 1150px) {
+  .coupons .container .item {
+    width: 100%;
+    margin-right: 20px;
+  }
+  .coupons div.container {
+    margin: 0 20px auto;
   }
 }

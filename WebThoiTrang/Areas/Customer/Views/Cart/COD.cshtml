@@ -91,6 +91,9 @@
 								<span class="text-info">Chi Tiết Sản Phẩm:</span>
 							</h4>
 							<ul class="list-group mb-3">
+								@{
+									var total = 0.0;
+								}
 								@foreach (var details in Model.ShoppingCartList)
 								{
 									<li class="list-group-item d-flex justify-content-between">
@@ -102,9 +105,22 @@
 										</div>
 										<small class="text-muted ">Số Lượng: @details.Count</small>
 										<span class="text-muted">@((details.Price * details.Count).ToString("#,##0.##", culture)) VNĐ </span>
+										@{
+											total += (details.Price * details.Count);
+										}
 									</li>
-									
+									@if (Model.OrderHeader.CouponCode != null)
+									{
+										<li class="list-group-item d-flex justify-content-between">
+											<div class="text-success">
+												<h6 class="my-0">Mã Giảm Giá Đả Sử Dụng</h6>
+												<small class="text-success">@Model.OrderHeader.CouponCode</small>
+											</div>
+											<span class="text-success">-$@(total - Model.OrderHeader.OrderTotal)</span>
+										</li>
+									}
 								}
+
 
 								<li class="list-group-item d-flex justify-content-between bg-light">
 									<small class="text-white">Tông Giá Của Đơn Hàng Là (VNĐ)</small>

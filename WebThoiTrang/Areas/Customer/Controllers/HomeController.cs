@@ -26,7 +26,7 @@ namespace WebThoiTrang.Areas.Customer.Controllers
 
         public IActionResult Index(int page = 1)
         {
-            int pageSize = 9;
+            int pageSize = 12;
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages").OrderBy(u => u.Id).ToList();
             return View(productList.ToPagedList(page,pageSize));
         }

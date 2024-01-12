@@ -58,7 +58,7 @@
 									<span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
 								</div>
 							</div>
-				@* 			<div class="row my-1">
+							<div class="row my-1">
 								<div class="col-3">
 									<label>Thành Phố</label>
 								</div>
@@ -84,13 +84,16 @@
 									<input asp-for="OrderHeader.PostalCode" class="form-control" />
 									<span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
 								</div>
-							</div> *@
+							</div>
 						</div>
 						<div class="col-12 col-lg-5 offset-lg-1">
 							<h4 class="d-flex justify-content-between align-items-center mb-3">
 								<span class="text-info">Chi Tiết Sản Phẩm:</span>
 							</h4>
 							<ul class="list-group mb-3">
+								@{
+									var total = 0.0;
+								}
 								@foreach (var details in Model.ShoppingCartList)
 								{
 									<li class="list-group-item d-flex justify-content-between">
@@ -101,10 +104,22 @@
 										<small class="text-muted text-center">Màu Sắc: @details.Color</small>
 										<small class="text-muted text-center">Kích Cở: @details.Size</small>
 										<span class="text-muted">@((details.Price * details.Count).ToString("#,##0.##", culture)) VNĐ </span>
+										@{
+											total += (details.Price * details.Count);
+										}
 									</li>
 									
 								}
-
+								@if (Model.OrderHeader.CouponCode != null)
+								{
+									<li class="list-group-item d-flex justify-content-between">
+										<div class="text-success">
+											<h6 class="my-0">Mã Giảm Giá Đả Sử Dụng</h6>
+											<small class="text-success">@Model.OrderHeader.CouponCode</small>
+										</div>
+										<span class="text-success">-$@(total - Model.OrderHeader.OrderTotal)</span>
+									</li>
+								}
 								<li class="list-group-item d-flex justify-content-between bg-light">
 									<small class="text-white">Tông Giá Của Đơn Hàng Là (VNĐ)</small>
 									<strong class="text-white">@Model.OrderHeader.OrderTotal.ToString("#,##0.##", culture) VNĐ</strong>

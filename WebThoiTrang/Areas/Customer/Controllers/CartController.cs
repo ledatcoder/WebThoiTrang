@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
 using System.Security.Claims;
+using WebThoiTrang.DataAccess.Data;
 using WebThoiTrang.DataAccess.Repository.IRepository;
 using WebThoiTrang.Models;
 using WebThoiTrang.Models.ViewModels;
@@ -14,15 +16,19 @@ namespace WebThoiTrang.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _db;
+
+
         [BindProperty]
         public ShoppingCartVM ShoppingCartVM { get; set; }
-        public CartController(IUnitOfWork unitOfWork)
+        public CartController(IUnitOfWork unitOfWork, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
+            _db = db;
 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -42,10 +48,16 @@ namespace WebThoiTrang.Areas.Customer.Controllers
                 cart.Price = GetPriceBasedOnQuantity(cart);
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
             }
-
+            ShoppingCartVM.OrderHeader.OrderTotalOriginal = ShoppingCartVM.OrderHeader.OrderTotal;
+            if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
+            {
+                ShoppingCartVM.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
+                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == ShoppingCartVM.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
+                ShoppingCartVM.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, ShoppingCartVM.OrderHeader.OrderTotalOriginal);
+            }
             return View(ShoppingCartVM);
         }
-        public IActionResult Summary()
+        public async Task<IActionResult> Summary()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -70,11 +82,19 @@ namespace WebThoiTrang.Areas.Customer.Controllers
                 cart.Price = GetPriceBasedOnQuantity(cart);
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
             }
+            ShoppingCartVM.OrderHeader.OrderTotalOriginal = ShoppingCartVM.OrderHeader.OrderTotal;
+            if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
+            {
+                ShoppingCartVM.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
+                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == ShoppingCartVM.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
+                ShoppingCartVM.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, ShoppingCartVM.OrderHeader.OrderTotalOriginal);
+            }
             return View(ShoppingCartVM);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Summary")]
-        public IActionResult SummaryPOST()
+        public async Task<IActionResult> SummaryPOST()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -108,6 +128,7 @@ namespace WebThoiTrang.Areas.Customer.Controllers
             }
             _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
             _unitOfWork.Save();
+            ShoppingCartVM.OrderHeader.OrderTotalOriginal = 0;
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 OrderDetail orderDetail = new()
@@ -120,9 +141,21 @@ namespace WebThoiTrang.Areas.Customer.Controllers
                     Color = cart.Color,
                     
                 };
+                ShoppingCartVM.OrderHeader.OrderTotalOriginal += orderDetail.Price * orderDetail.Count;
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();
             }
+            if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
+            {
+                ShoppingCartVM.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
+                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == ShoppingCartVM.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
+                ShoppingCartVM.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, ShoppingCartVM.OrderHeader.OrderTotalOriginal);
+            }
+            else
+            {
+                ShoppingCartVM.OrderHeader.OrderTotal = ShoppingCartVM.OrderHeader.OrderTotalOriginal;
+            }
+            ShoppingCartVM.OrderHeader.CouponCodeDiscount = ShoppingCartVM.OrderHeader.OrderTotalOriginal - ShoppingCartVM.OrderHeader.OrderTotal;
             if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
         
@@ -141,7 +174,7 @@ namespace WebThoiTrang.Areas.Customer.Controllers
                     {
                         PriceData = new SessionLineItemPriceDataOptions
                         {
-                            UnitAmount = (long)(item.Price), 
+                            UnitAmount = (long)(ShoppingCartVM.OrderHeader.OrderTotal), 
                             Currency = "vnd",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
@@ -163,7 +196,7 @@ namespace WebThoiTrang.Areas.Customer.Controllers
             }
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
         }
-		public IActionResult COD()
+		public async Task<IActionResult> COD()
 		{
 			var claimsIdentity = (ClaimsIdentity)User.Identity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -188,11 +221,18 @@ namespace WebThoiTrang.Areas.Customer.Controllers
 				cart.Price = GetPriceBasedOnQuantity(cart);
 				ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
 			}
-			return View(ShoppingCartVM);
+            ShoppingCartVM.OrderHeader.OrderTotalOriginal = ShoppingCartVM.OrderHeader.OrderTotal;
+            if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
+            {
+                ShoppingCartVM.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
+                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == ShoppingCartVM.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
+                ShoppingCartVM.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, ShoppingCartVM.OrderHeader.OrderTotalOriginal);
+            }
+            return View(ShoppingCartVM);
 		}
 		[HttpPost]
 		[ActionName("COD")]
-		public IActionResult CODPOST()
+		public async Task<IActionResult> CODPOST()
         {
 			var claimsIdentity = (ClaimsIdentity)User.Identity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -211,12 +251,19 @@ namespace WebThoiTrang.Areas.Customer.Controllers
 				cart.Price = GetPriceBasedOnQuantity(cart);
 				ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
 			}
-			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
+            ShoppingCartVM.OrderHeader.OrderTotalOriginal = ShoppingCartVM.OrderHeader.OrderTotal;
+            if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
+            {
+                ShoppingCartVM.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
+                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == ShoppingCartVM.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
+                ShoppingCartVM.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, ShoppingCartVM.OrderHeader.OrderTotalOriginal);
+            }
+            ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
 			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
 			_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
 			_unitOfWork.Save();
-
-			return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
+            
+            return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
 		}
         public IActionResult OrderConfirmation(int id)
         {
@@ -271,6 +318,24 @@ namespace WebThoiTrang.Areas.Customer.Controllers
             }
 
             _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult AddCoupon()
+        {
+            if (ShoppingCartVM.OrderHeader.CouponCode == null)
+            {
+                ShoppingCartVM.OrderHeader.CouponCode = "";
+            }
+            HttpContext.Session.SetString(SD.ssCouponCode, ShoppingCartVM.OrderHeader.CouponCode);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveCoupon()
+        {
+
+            HttpContext.Session.SetString(SD.ssCouponCode, string.Empty);
+
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Remove(int cartId)

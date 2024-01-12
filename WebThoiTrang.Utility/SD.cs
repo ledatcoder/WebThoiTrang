@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebThoiTrang.Models;
 
 namespace WebThoiTrang.Utility
 {
@@ -27,9 +28,39 @@ namespace WebThoiTrang.Utility
         public const string PaymentStatusDelayedPayment = "Đả Được Phê Duyệt Thanh Toán Sau";
         public const string PaymentStatusRejected = "Thanh Toán Không Thành Công";
 
+		public const string ssCouponCode = "ssCouponCode";
 
-        public const string SessionCart = "SessionShoppingCart";
+		public const string SessionCart = "SessionShoppingCart";
 
+        public static double DiscountedPrice(Coupon couponFromDb, double OriginalOrderTotal)
+        {
+            if (couponFromDb == null)
+            {
+                return OriginalOrderTotal;
+            }
+            else
+            {
+                if (couponFromDb.MinimumAmount > OriginalOrderTotal)
+                {
+                    return OriginalOrderTotal;
+                }
+                else
+                {
+                    //everything is valid
+                    if (Convert.ToInt32(couponFromDb.CouponType) == (int)Coupon.ECouponType.VND)
+                    {
+                        //$10 off $100
+                        return Math.Round(OriginalOrderTotal - couponFromDb.Discount, 2);
+                    }
+                    if (Convert.ToInt32(couponFromDb.CouponType) == (int)Coupon.ECouponType.Percent)
+                    {
+                        //10% off $100
+                        return Math.Round(OriginalOrderTotal - (OriginalOrderTotal * couponFromDb.Discount / 100), 2);
+                    }
+                }
+            }
+            return OriginalOrderTotal;
+        }
 
     }
 }
