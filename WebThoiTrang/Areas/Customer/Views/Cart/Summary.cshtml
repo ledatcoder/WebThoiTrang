@@ -138,8 +138,12 @@
 						</p>
 					</div>
 					<div class="col-12 col-md-4">
-						<button type="submit" value="Place Order" class="btn btn-primary form-control">Thanh Toán Trực Tiếp </button>
-						<a asp-action="COD" class="btn btn-primary border-0 bg-gradient w-100 ">Thanh Toán Khi Nhận Hàng</a>
+						@if(Model.OrderHeader.OrderTotal != 0)
+						{
+							<button type="submit" value="Place Order" class="btn btn-primary form-control">Thanh Toán Trực Tiếp </button>
+							<a asp-action="COD" class="btn btn-primary border-0 bg-gradient w-100 ">Thanh Toán Khi Nhận Hàng</a>
+						}
+						
 					</div>
 				</div>
 			</div>

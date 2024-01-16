@@ -8,7 +8,7 @@ using WebThoiTrang.Utility;
 namespace WebThoiTrang.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+   
     public class CouponController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -17,7 +17,7 @@ namespace WebThoiTrang.Areas.Admin.Controllers
         {
             _db = db;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _db.Coupon.ToListAsync());
@@ -55,7 +55,7 @@ namespace WebThoiTrang.Areas.Admin.Controllers
             return View(coupons);
         }
 
-
+        [Authorize(Roles = SD.Role_Admin)]
         //GET Edit Coupon
         public async Task<IActionResult> Edit(int? id)
         {
@@ -110,7 +110,7 @@ namespace WebThoiTrang.Areas.Admin.Controllers
             return View(coupons);
         }
 
-
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -127,7 +127,7 @@ namespace WebThoiTrang.Areas.Admin.Controllers
 
             return View(coupon);
         }
-
+        [Authorize(Roles = SD.Role_Admin)]
         //GET Delete Coupon
         public async Task<IActionResult> Delete(int? id)
         {

@@ -1,0 +1,45 @@
+﻿@model List<Coupon>
+@using System.Globalization
+<div class="coupons">
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Indie+Flower|Inknut+Antiqua|Lora|Ravi+Prakash" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <div class="container">
+        <h1 class="upcomming">Danh Sách Mã Giảm Giá Tháng Này</h1>
+       @foreach (var item in Model)
+        {
+            <div class="item">
+                <div class="item-right">
+                    <h2 class="num">23</h2>
+                    <p class="day">Feb</p>
+                    <span class="up-border"></span>
+                    <span class="down-border"></span>
+                </div> <!-- end item-right -->
+
+                <div class="item-left">
+                    <p class="event">Voucher</p>
+                    <h2 class="title">Tất Cả Sản Phẫm</h2>
+
+                    <div class="sce">
+                        <div class="icon">
+                            <i class="fa fa-table"></i>
+                        </div>
+                        <p>Monday 15th 2016 <br /> 15:20Pm & 11:00Am</p>
+                    </div>
+                    <div class="fix"></div>
+                    <div class="loc">
+                        <div class="icon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <p> Tại Webside Này</p>
+                    </div>
+                    <div class="fix"></div>
+                    <button class="tickets">@item.Name</button>
+                </div> <!-- end item-right -->
+            </div> <!-- end item -->
+        }
+     
+    </div>
+</div>
+
+

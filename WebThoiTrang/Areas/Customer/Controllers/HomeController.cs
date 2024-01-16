@@ -24,10 +24,14 @@ namespace WebThoiTrang.Areas.Customer.Controllers
             _unitOfWork = unitOfWork; 
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string searchString,int page = 1)
         {
             int pageSize = 12;
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages").OrderBy(u => u.Id).ToList();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                productList = _unitOfWork.Product.GetAll(n => n.Name.Contains(searchString));
+            }
             return View(productList.ToPagedList(page,pageSize));
         }
         public IActionResult Details(int productId)
